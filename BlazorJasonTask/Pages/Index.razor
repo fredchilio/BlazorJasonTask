@@ -1,0 +1,16 @@
+﻿@page "/"
+
+@code
+{
+    public class Tasks
+    {
+        public Guid ID { get; set; }
+        public string Description { get; set; }
+        public bool concluded { get; set; }
+        public DateTime DateCriateded { get; set; }
+    }
+
+    private string newTask = "";
+
+    private List<Tasks> tasks = new List<Tasks>();
+}
