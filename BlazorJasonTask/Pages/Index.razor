@@ -24,14 +24,24 @@ else
             @foreach (var item in tasks)
             {
             <tr>
+                <td><button @onclick="@(()=> DeleteTasks(item.ID))"><i class="oi oi-trash"></i></button></td>
                 <td>@item.DateCriateded</td>
                 <td>@item.Description</td>
-                <td>@item.Concluded</td>
+                <td><input type="checkbox" @bind="item.Concluded"/>@item.Concluded</td>
             </tr>
             }
 
         </tbody>
     </table>
+}
+@if (tasks!=null)
+{
+    <div class="form-group">
+        <label>Tasks</label>
+        <input type="text" placeholder="type the new task" @bind="newTask"/>
+        <button class="btn btn-primary" @onclick="AddNewItem">Add New Item</button>
+    </div>
+
 }
 @code
 {
@@ -51,4 +61,22 @@ else
     private string newTask = "";
 
     private List<Tasks> tasks = new List<Tasks>();
+
+    void AddNewItem()
+    {
+        if (!string.IsNullOrWhiteSpace(newTask))
+        {
+            tasks.Add(new Tasks
+            {
+                DateCriateded = DateTime.Now,
+                Description = newTask,
+                ID = Guid.NewGuid()
+            });
+            newTask = "";
+        }
+    }
+    void DeleteTasks(Guid id)
+    {
+        tasks.Remove(tasks.First(x => x.ID == id));
+    }
 }
