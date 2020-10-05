@@ -2,13 +2,15 @@
 @inject HttpClient http
 
 <h1>Teste</h1>
-@if (tasks==null)
+@if (tasks == null)
 {
-    <p>Carregando...</p>
+    <Alert Message="Carregando..." />
+    @*<p>Carregando...</p>*@
 }
-else if(!tasks.Any())
+else if (!tasks.Any())
 {
-    <p>Ainda nao existe tarefa</p>
+    @*<p>Ainda nao existe tarefa</p>*@
+    <Alert Message="Náo existem tarefas" />
 }
 else
 {
@@ -23,28 +25,28 @@ else
         <tbody>
             @foreach (var item in tasks)
             {
-            <tr>
-                <td><button @onclick="@(()=> DeleteTasks(item.ID))"><i class="oi oi-trash"></i></button></td>
-                <td>@item.DateCriateded</td>
-                <td>@item.Description</td>
-                <td><input type="checkbox" @bind="item.Concluded"/>@item.Concluded</td>
-            </tr>
+                <tr>
+                    <td><button @onclick="@(()=> DeleteTasks(item.ID))"><i class="oi oi-trash"></i></button></td>
+                    <td>@item.DateCriateded</td>
+                    <td>@item.Description</td>
+                    <td><input type="checkbox" @bind="item.Concluded" />@item.Concluded</td>
+                </tr>
             }
 
         </tbody>
     </table>
 }
-@if (tasks!=null)
+@if (tasks != null)
 {
     <div class="form-group">
         <label>Tasks</label>
-        <input type="text" placeholder="type the new task" @bind="newTask"/>
+        <input type="text" placeholder="type the new task" @bind="newTask" />
         <button class="btn btn-primary" @onclick="AddNewItem">Add New Item</button>
     </div>
 
 }
 @code
-{
+        {
     protected override async Task OnInitializedAsync()
     {
         tasks = await http.GetFromJsonAsync<List<Tasks>>("data/tasks.json");
