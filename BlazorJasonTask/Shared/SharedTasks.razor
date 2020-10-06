@@ -1,0 +1,76 @@
+﻿<h1>@Titulo</h1>
+
+
+
+<h1>Teste</h1>
+@if (tasks == null)
+{   
+    <img src="https://media.giphy.com/media/xUA7b8HnXheyI13tiU/giphy.gif"/>
+    <Alert Message="Carregando..." />
+    @*<p>Carregando...</p>*@
+}
+else if (!tasks.Any())
+{
+    @*<p>Ainda nao existe tarefa</p>*@
+    <Alert Message="Náo existem tarefas" />
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Description</th>
+                <th>Concluida</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in tasks)
+            {
+                <tr>
+                    <td><button @onclick="@(()=> DeleteTasks(item.ID))"><i class="oi oi-trash"></i></button></td>
+                    <EachTask item="item"/>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+@if (tasks != null)
+{
+    <div class="form-group">
+        <label>Tasks</label>
+        <input type="text" placeholder="type the new task" @bind="newTask" />
+        <button class="btn btn-primary" @onclick="AddNewItem">Add New Item</button>
+    </div>
+
+}
+@code
+        {
+    [Parameter] public List<Tasks> tasks { get; set; }
+    [Parameter] public string Titulo { get; set; }
+
+
+
+    private string newTask = "";
+
+    
+
+    void AddNewItem()
+    {
+        if (!string.IsNullOrWhiteSpace(newTask))
+        {
+            tasks.Add(new Tasks
+            {
+                DateCriateded = DateTime.Now,
+                Description = newTask,
+                ID = Guid.NewGuid()
+            });
+            newTask = "";
+        }
+    }
+    void DeleteTasks(Guid id)
+    {
+        tasks.Remove(tasks.First(x => x.ID == id));
+    }
+}

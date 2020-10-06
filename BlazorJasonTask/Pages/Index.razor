@@ -1,84 +1,19 @@
 ﻿@page "/"
 @inject HttpClient http
+<h1>SharedTarefas</h1>
 
-<h1>Teste</h1>
-@if (tasks == null)
-{
-    <Alert Message="Carregando..." />
-    @*<p>Carregando...</p>*@
-}
-else if (!tasks.Any())
-{
-    @*<p>Ainda nao existe tarefa</p>*@
-    <Alert Message="Náo existem tarefas" />
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Description</th>
-                <th>Concluida</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in tasks)
-            {
-                <tr>
-                    <td><button @onclick="@(()=> DeleteTasks(item.ID))"><i class="oi oi-trash"></i></button></td>
-                    <td>@item.DateCriateded</td>
-                    <td>@item.Description</td>
-                    <td><input type="checkbox" @bind="item.Concluded" />@item.Concluded</td>
-                </tr>
-            }
+<SharedTasks tasks="GetTasks()" Titulo="Lista De Tarefas"/>
 
-        </tbody>
-    </table>
-}
-@if (tasks != null)
-{
-    <div class="form-group">
-        <label>Tasks</label>
-        <input type="text" placeholder="type the new task" @bind="newTask" />
-        <button class="btn btn-primary" @onclick="AddNewItem">Add New Item</button>
-    </div>
-
-}
 @code
-        {
+{
+    List<Tasks> tasks = new List<Tasks>();
     protected override async Task OnInitializedAsync()
     {
         tasks = await http.GetFromJsonAsync<List<Tasks>>("data/tasks.json");
     }
 
-    public class Tasks
+    private List<Tasks> GetTasks()
     {
-        public Guid ID { get; set; }
-        public string Description { get; set; }
-        public bool Concluded { get; set; }
-        public DateTime DateCriateded { get; set; }
-    }
-
-    private string newTask = "";
-
-    private List<Tasks> tasks = new List<Tasks>();
-
-    void AddNewItem()
-    {
-        if (!string.IsNullOrWhiteSpace(newTask))
-        {
-            tasks.Add(new Tasks
-            {
-                DateCriateded = DateTime.Now,
-                Description = newTask,
-                ID = Guid.NewGuid()
-            });
-            newTask = "";
-        }
-    }
-    void DeleteTasks(Guid id)
-    {
-        tasks.Remove(tasks.First(x => x.ID == id));
+        return tasks;
     }
 }
