@@ -1,0 +1,18 @@
+﻿@page "/event1"
+
+<label> Event data: Press the letter A for changing the color </label>
+<div style="background-color: @color; padding:50px;">   </div>
+<input type="text" @onkeypress="@(e=> KeyboardPressed(e))"  />
+@code {
+    private string color = "red";
+    void KeyboardPressed(KeyboardEventArgs args)
+    {
+        if (args.Key == "A" || args.Key == "a" )
+        {
+            color = "blue";
+            Console.WriteLine("A tecla A foi pressionada");
+
+        }
+    }
+
+}
