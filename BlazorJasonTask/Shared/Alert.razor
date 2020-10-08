@@ -1,8 +1,15 @@
-﻿<div class="alert alert-danger mt-4" role="alert">
-    <span class="oi oi-circle-x mr-2" aria-hidden="true"></span>
-    <strong>@Message</strong>
+﻿<div>
+    @if(@ChildContent==null)
+    {
+        <span style="color:red">Generic Text</span>
+    }
+    else
+    {
+        @ChildContent
+    }
 </div>
 
     @code {
-        [Parameter] public string Message {get; set;}
+        
+        [Parameter] public RenderFragment ChildContent { get; set; }
     }

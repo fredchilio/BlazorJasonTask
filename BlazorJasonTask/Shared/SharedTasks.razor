@@ -6,13 +6,24 @@
 @if (tasks == null)
 {   
     <img src="https://media.giphy.com/media/xUA7b8HnXheyI13tiU/giphy.gif"/>
-    <Alert Message="Carregando..." />
+    <Alert>
+    
+    <span style="color:blue"></span>
+    </Alert>
     @*<p>Carregando...</p>*@
 }
 else if (!tasks.Any())
 {
     @*<p>Ainda nao existe tarefa</p>*@
-    <Alert Message="Náo existem tarefas" />
+    <Alert>
+        <div class="card">
+            <div class="card-body">
+                You need input some tasks
+            </div>
+
+        </div>
+
+    </Alert>
 }
 else
 {
@@ -28,8 +39,8 @@ else
             @foreach (var item in tasks)
             {
                 <tr>
-                    <td><button @onclick="@(()=> DeleteTasks(item.ID))"><i class="oi oi-trash"></i></button></td>
-                    <EachTask item="item"/>
+                    
+                    <EachTask item="item" ToRemoveTask="DeleteTasks"/>
                 </tr>
             }
 
@@ -69,8 +80,8 @@ else
             newTask = "";
         }
     }
-    void DeleteTasks(Guid id)
+    void DeleteTasks(Tasks tasksID)
     {
-        tasks.Remove(tasks.First(x => x.ID == id));
+        tasks.Remove(tasks.First(x => x.ID == tasksID.ID));
     }
 }
