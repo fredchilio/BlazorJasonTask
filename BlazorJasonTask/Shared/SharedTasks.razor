@@ -5,10 +5,15 @@
 <h1>Teste</h1>
 @if (tasks == null)
 {   
-    <img src="https://media.giphy.com/media/xUA7b8HnXheyI13tiU/giphy.gif"/>
-    <Alert>
     
-    <span style="color:blue"></span>
+    <Alert>
+        <Conteudo1>
+            <img src="https://www.blogson.com.br/wp-content/uploads/2017/10/lg.walking-clock-preloader.gif"/>
+            <h1> Aguardando...</h1>
+        </Conteudo1>
+        <Conteudo2>
+            <h1> Carregando...</h1>
+        </Conteudo2>
     </Alert>
     @*<p>Carregando...</p>*@
 }
@@ -16,12 +21,13 @@ else if (!tasks.Any())
 {
     @*<p>Ainda nao existe tarefa</p>*@
     <Alert>
-        <div class="card">
-            <div class="card-body">
-                You need input some tasks
-            </div>
-
-        </div>
+        <Conteudo1>
+            <img src="http://painelstream.net/img/404_icon.gif" />
+            <h1>Nothing found</h1>
+        </Conteudo1>
+        <Conteudo2>
+            <h1>Insert one or more Tasks</h1>
+        </Conteudo2>
 
     </Alert>
 }

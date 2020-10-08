@@ -1,15 +1,26 @@
 ﻿<div>
-    @if(@ChildContent==null)
+    @if(Conteudo1==null)
     {
         <span style="color:red">Generic Text</span>
     }
     else
     {
-        @ChildContent
+        @Conteudo1
+    }
+</div>
+<div>
+    @if (Conteudo2==null)
+    {
+        <span style="Color:lightcoral"></span>
+    }
+    else
+    {
+        @Conteudo2
     }
 </div>
 
     @code {
         
-        [Parameter] public RenderFragment ChildContent { get; set; }
+        [Parameter] public RenderFragment Conteudo1 { get; set; }
+        [Parameter] public RenderFragment Conteudo2 { get; set; }
     }
