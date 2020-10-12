@@ -3,56 +3,32 @@
 
 
 <h1>Teste</h1>
-@if (tasks == null)
-{   
-    
-    <Alert>
-        <Conteudo1>
-            <img src="https://www.blogson.com.br/wp-content/uploads/2017/10/lg.walking-clock-preloader.gif"/>
-            <h1> Aguardando...</h1>
-        </Conteudo1>
-        <Conteudo2>
-            <h1> Carregando...</h1>
-        </Conteudo2>
-    </Alert>
-    @*<p>Carregando...</p>*@
-}
-else if (!tasks.Any())
-{
-    @*<p>Ainda nao existe tarefa</p>*@
-    <Alert>
-        <Conteudo1>
-            <img src="http://painelstream.net/img/404_icon.gif" />
-            <h1>Nothing found</h1>
-        </Conteudo1>
-        <Conteudo2>
-            <h1>Insert one or more Tasks</h1>
-        </Conteudo2>
 
-    </Alert>
-}
-else
-{
+
     <table class="table">
         <thead>
             <tr>
+                <th>Action</th>
                 <th>Data</th>
                 <th>Description</th>
                 <th>Concluida</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in tasks)
-            {
-                <tr>
-                    
-                    <EachTask item="item" ToRemoveTask="DeleteTasks"/>
-                </tr>
-            }
+            
+                <GenericList ListItem="tasks">
+                    <List Context="newTask">
+                        <br/>
+                        <EachTask item="newTask" ToRemoveTask="DeleteTasks" />
 
+
+                    </List>
+
+                </GenericList>
+            
         </tbody>
     </table>
-}
+
 @if (tasks != null)
 {
     <div class="form-group">

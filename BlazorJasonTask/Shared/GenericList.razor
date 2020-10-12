@@ -1,0 +1,45 @@
+﻿@* especificar um tipo generico*@
+@typeparam Titem
+@if (ListItem == null)
+{
+    if (Loading == null)
+    {
+        <img src="https://www.blogson.com.br/wp-content/uploads/2017/10/lg.walking-clock-preloader.gif" />
+        <text> Waiting...</text>
+    }
+    else
+    {
+        @Loading
+    }
+}
+else if (!ListItem.Any())
+{
+    if (WithoutRegister == null)
+    {
+        <img src="http://painelstream.net/img/404_icon.gif" />
+        <text>There is no Task</text>
+    }
+    else
+    {
+        @WithoutRegister
+    }
+
+
+
+
+
+}
+else
+{
+    foreach(var element in ListItem)
+    {
+        @List(element)
+    }
+}
+
+@code {
+    [Parameter] public RenderFragment Loading { get; set; }
+    [Parameter] public RenderFragment WithoutRegister { get; set; }
+    [Parameter] public List<Titem> ListItem { get; set; }
+    [Parameter] public RenderFragment<Titem> List { get; set; }
+}
